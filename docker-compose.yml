@@ -1,0 +1,42 @@
+services:
+  app:
+    build: .
+    container_name: kicknroar-app
+    ports:
+      - "8000:8000"
+    environment:
+      PORT: "8000"
+      ENV: development
+      DATABASE_URL: postgres://kicknroar:kicknroar123@postgres:5432/kicknroar?sslmode=disable
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+      ALLOWED_ORIGINS: http://localhost:8000,http://localhost:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8000/api/v1/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  postgres:
+    image: postgis/postgis:latest
+    platform: linux/amd64
+    container_name: kicknroar-db
+    environment:
+      POSTGRES_USER: kicknroar
+      POSTGRES_PASSWORD: kicknroar123
+      POSTGRES_DB: kicknroar
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kicknroar"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

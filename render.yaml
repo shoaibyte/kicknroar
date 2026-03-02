@@ -1,0 +1,43 @@
+# Single web service: API + frontend (monolith). Build uses Dockerfile (frontend + Go).
+services:
+  - type: web
+    name: kicknroar
+    env: docker
+    region: singapore
+    plan: starter
+    branch: main
+
+    # Docker build (Dockerfile): builds web/dist then Go binary with embed
+    # Start: ./server (from Dockerfile CMD)
+    healthCheckPath: /api/v1/health
+
+    envVars:
+      - key: PORT
+        value: "8000"
+      - key: ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kicknroar-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: https://kicknroar.com
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_REGION
+        value: ap-south-1
+      - key: AWS_S3_BUCKET
+        value: kicknroar-production
+      - key: GOOGLE_MAPS_API_KEY
+        sync: false
+
+databases:
+  - name: kicknroar-db
+    databaseName: kicknroar
+    plan: starter
+    postgresMajorVersion: 15
+    region: singapore
