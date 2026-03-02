@@ -1,0 +1,54 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+/server
+kicknroar-backend
+
+# Test binary
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Ent generated code
+internal/ent/generated/
+
+# Temporary files
+tmp/
+temp/
+
+# Web / Frontend (web/)
+web/node_modules/
+# web/dist/ has a placeholder index.html committed so go build works; production build overwrites via yarn build
+web/dist/assets/
+web/dist-ssr/
+web/coverage/
+web/*.tsbuildinfo

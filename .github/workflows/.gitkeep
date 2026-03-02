@@ -1,0 +1,5 @@
+# GitHub Actions workflows will be added here in future sprints
+# Planned workflows:
+# - test.yml: Run tests on push/PR
+# - deploy.yml: Auto-deploy to Render on main branch merge
+# - lint.yml: Code quality checks

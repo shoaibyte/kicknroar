@@ -1,0 +1,5 @@
+internal/ent/
+vendor/
+*.test.go
+*_test.go
+

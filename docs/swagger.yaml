@@ -1,0 +1,1305 @@
+basePath: /api/v1
+definitions:
+  kicknroar_backend_internal_dto_request.CreateMatchRequest:
+    description: Match creation request with venue, date, time, and player details
+    properties:
+      cost_per_player:
+        example: 500
+        minimum: 1
+        type: integer
+      description:
+        example: Casual futsal match for intermediate players
+        type: string
+      duration_hours:
+        example: 2
+        maximum: 4
+        minimum: 0.5
+        type: number
+      match_date:
+        example: "2024-12-01T00:00:00Z"
+        type: string
+      match_type:
+        enum:
+        - casual
+        - competitive
+        - tournament
+        example: casual
+        type: string
+      max_players:
+        example: 10
+        maximum: 22
+        minimum: 2
+        type: integer
+      rules_notes:
+        example: Bring your own water bottle
+        type: string
+      skill_level_required:
+        enum:
+        - beginner
+        - intermediate
+        - advanced
+        - professional
+        example: intermediate
+        type: string
+      start_time:
+        example: "2024-12-01T18:00:00Z"
+        type: string
+      title:
+        example: Weekend Futsal Match
+        maxLength: 100
+        minLength: 3
+        type: string
+      venue_id:
+        example: 550e8400-e29b-41d4-a716-446655440000
+        type: string
+      visibility:
+        enum:
+        - public
+        - private
+        - friends_only
+        example: public
+        type: string
+    required:
+    - cost_per_player
+    - duration_hours
+    - match_date
+    - match_type
+    - max_players
+    - start_time
+    - title
+    - venue_id
+    - visibility
+    type: object
+  kicknroar_backend_internal_dto_request.CreateVenueRequest:
+    description: Venue creation request with location, facilities, and contact information
+    properties:
+      address:
+        example: Road 27, Dhanmondi, Dhaka
+        type: string
+      capacity:
+        example: 10
+        minimum: 1
+        type: integer
+      contact_info:
+        additionalProperties: true
+        type: object
+      facilities:
+        example:
+        - parking
+        - changing_room
+        - water_dispenser
+        items:
+          type: string
+        type: array
+      field_type:
+        enum:
+        - futsal
+        - football
+        - astro
+        example: futsal
+        type: string
+      google_place_id:
+        example: ChIJN1t_tDeuEmsRUsoyG83frY4
+        type: string
+      hourly_rate:
+        example: 2000
+        type: integer
+      latitude:
+        example: 23.7465
+        type: number
+      longitude:
+        example: 90.376
+        type: number
+      name:
+        example: Dhanmondi Futsal Arena
+        maxLength: 100
+        minLength: 2
+        type: string
+      operating_hours:
+        additionalProperties: true
+        type: object
+      surface_type:
+        enum:
+        - grass
+        - artificial
+        - concrete
+        example: artificial
+        type: string
+    required:
+    - address
+    - capacity
+    - field_type
+    - latitude
+    - longitude
+    - name
+    type: object
+  kicknroar_backend_internal_dto_request.LoginRequest:
+    description: User login request
+    properties:
+      email:
+        example: john.doe@example.com
+        type: string
+      password:
+        example: SecurePass123!
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  kicknroar_backend_internal_dto_request.RefreshRequest:
+    description: Token refresh request
+    properties:
+      refresh_token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        type: string
+    required:
+    - refresh_token
+    type: object
+  kicknroar_backend_internal_dto_request.SignupRequest:
+    description: User registration request
+    properties:
+      email:
+        example: john.doe@example.com
+        type: string
+      full_name:
+        example: John Doe
+        maxLength: 100
+        minLength: 2
+        type: string
+      password:
+        example: SecurePass123!
+        minLength: 8
+        type: string
+      phone:
+        example: "+8801712345678"
+        maxLength: 20
+        minLength: 10
+        type: string
+    required:
+    - email
+    - full_name
+    - password
+    - phone
+    type: object
+  kicknroar_backend_internal_dto_request.UpdateMatchRequest:
+    description: Match update request - all fields are optional
+    properties:
+      cost_per_player:
+        example: 600
+        minimum: 1
+        type: integer
+      description:
+        example: Updated match description
+        type: string
+      duration_hours:
+        example: 2.5
+        maximum: 4
+        minimum: 0.5
+        type: number
+      match_date:
+        example: "2024-12-01T00:00:00Z"
+        type: string
+      match_type:
+        enum:
+        - casual
+        - competitive
+        - tournament
+        example: competitive
+        type: string
+      max_players:
+        example: 12
+        maximum: 22
+        minimum: 2
+        type: integer
+      rules_notes:
+        example: Updated rules and notes
+        type: string
+      skill_level_required:
+        enum:
+        - beginner
+        - intermediate
+        - advanced
+        - professional
+        example: advanced
+        type: string
+      start_time:
+        example: "2024-12-01T19:00:00Z"
+        type: string
+      title:
+        example: Weekend Futsal Match - Updated
+        maxLength: 100
+        minLength: 3
+        type: string
+      visibility:
+        enum:
+        - public
+        - private
+        - friends_only
+        example: public
+        type: string
+    type: object
+  kicknroar_backend_internal_dto_request.UpdateUserRequest:
+    description: 'User profile update request - all fields are optional. Example:
+      {"full_name":"John Doe Updated","skill_level":"advanced","profile_image_url":"https://example.com/avatar.jpg","preferred_locations":["Dhanmondi","Gulshan","Banani"]}'
+    properties:
+      full_name:
+        example: John Doe Updated
+        maxLength: 100
+        minLength: 2
+        type: string
+      preferred_locations:
+        example:
+        - Dhanmondi
+        - Gulshan
+        - Banani
+        items:
+          type: string
+        type: array
+      profile_image_url:
+        example: https://example.com/avatar.jpg
+        type: string
+      skill_level:
+        enum:
+        - beginner
+        - intermediate
+        - advanced
+        - professional
+        example: advanced
+        type: string
+    type: object
+  kicknroar_backend_internal_dto_request.UpdateVenueRequest:
+    description: Venue update request - all fields are optional
+    properties:
+      address:
+        example: Road 27, Dhanmondi, Dhaka - Updated
+        type: string
+      capacity:
+        example: 12
+        minimum: 1
+        type: integer
+      contact_info:
+        additionalProperties: true
+        type: object
+      facilities:
+        example:
+        - parking
+        - changing_room
+        - water_dispenser
+        - shower
+        items:
+          type: string
+        type: array
+      field_type:
+        enum:
+        - futsal
+        - football
+        - astro
+        example: futsal
+        type: string
+      hourly_rate:
+        example: 2500
+        type: integer
+      latitude:
+        example: 23.7465
+        type: number
+      longitude:
+        example: 90.376
+        type: number
+      name:
+        example: Dhanmondi Futsal Arena - Updated
+        maxLength: 100
+        minLength: 2
+        type: string
+      operating_hours:
+        additionalProperties: true
+        type: object
+      surface_type:
+        enum:
+        - grass
+        - artificial
+        - concrete
+        example: artificial
+        type: string
+    type: object
+  kicknroar_backend_internal_dto_response.AuthResponse:
+    description: Authentication response with user info and tokens
+    properties:
+      refresh_token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        type: string
+      token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        type: string
+      user:
+        $ref: '#/definitions/kicknroar_backend_internal_dto_response.UserResponse'
+    type: object
+  kicknroar_backend_internal_dto_response.ErrorDetail:
+    description: Detailed error information
+    properties:
+      code:
+        example: VALIDATION_ERROR
+        type: string
+      details:
+        example:
+        - email is required
+        - password must be at least 8 characters
+        items:
+          type: string
+        type: array
+      message:
+        example: Invalid request data
+        type: string
+    type: object
+  kicknroar_backend_internal_dto_response.ErrorResponse:
+    description: Standard error response format
+    properties:
+      error:
+        $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorDetail'
+    type: object
+  kicknroar_backend_internal_dto_response.UserResponse:
+    description: User profile information
+    properties:
+      created_at:
+        example: "2024-11-25T19:00:00Z"
+        type: string
+      email:
+        example: john.doe@example.com
+        type: string
+      full_name:
+        example: John Doe
+        type: string
+      id:
+        example: 550e8400-e29b-41d4-a716-446655440000
+        type: string
+      is_verified:
+        example: true
+        type: boolean
+      phone:
+        example: "+8801712345678"
+        type: string
+      profile_image_url:
+        example: https://example.com/avatar.jpg
+        type: string
+      skill_level:
+        example: intermediate
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact:
+    email: support@kickandroar.com
+    name: API Support
+  description: Football match coordination platform for Dhaka, Bangladesh
+  license:
+    name: Proprietary
+  title: Kick&Roar API
+  version: "1.0"
+paths:
+  /api/v1/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user with email and password, returns access token
+        and refresh token
+      parameters:
+      - description: Login request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/kicknroar_backend_internal_dto_request.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.AuthResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      summary: Login user
+      tags:
+      - auth
+  /api/v1/auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: Logout the current user and invalidate their session
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Logout user
+      tags:
+      - auth
+  /api/v1/auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Get a new access token using a valid refresh token
+      parameters:
+      - description: Refresh token request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/kicknroar_backend_internal_dto_request.RefreshRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.AuthResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      summary: Refresh access token
+      tags:
+      - auth
+  /api/v1/auth/signup:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user account with email, password, full name, and
+        phone
+      parameters:
+      - description: Signup request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/kicknroar_backend_internal_dto_request.SignupRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.AuthResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      summary: Register a new user
+      tags:
+      - auth
+  /api/v1/matches:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of matches with optional filters (status, date range,
+        pagination)
+      parameters:
+      - description: Filter by status (open, full, cancelled, completed)
+        in: query
+        name: status
+        type: string
+      - description: Filter matches from date (YYYY-MM-DD)
+        in: query
+        name: date_from
+        type: string
+      - description: Filter matches to date (YYYY-MM-DD)
+        in: query
+        name: date_to
+        type: string
+      - description: 'Number of results per page (default: 20)'
+        in: query
+        name: limit
+        type: integer
+      - description: 'Number of results to skip (default: 0)'
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: List matches
+      tags:
+      - matches
+    post:
+      consumes:
+      - application/json
+      description: Create a new football match with venue, date, time, and other details
+      parameters:
+      - description: Match creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/kicknroar_backend_internal_dto_request.CreateMatchRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Create a new match
+      tags:
+      - matches
+  /api/v1/matches/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a match (only creator can delete)
+      parameters:
+      - description: Match ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Delete match
+      tags:
+      - matches
+    get:
+      consumes:
+      - application/json
+      description: Get detailed information about a specific match
+      parameters:
+      - description: Match ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Get match by ID
+      tags:
+      - matches
+    put:
+      consumes:
+      - application/json
+      description: Update match details (only creator can update)
+      parameters:
+      - description: Match ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Match update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/kicknroar_backend_internal_dto_request.UpdateMatchRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Update match
+      tags:
+      - matches
+  /api/v1/matches/{id}/join:
+    post:
+      consumes:
+      - application/json
+      description: Join a match as a participant
+      parameters:
+      - description: Match ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Join a match
+      tags:
+      - matches
+  /api/v1/matches/{id}/leave:
+    post:
+      consumes:
+      - application/json
+      description: Leave a match that you previously joined
+      parameters:
+      - description: Match ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Leave a match
+      tags:
+      - matches
+  /api/v1/matches/{id}/participants:
+    get:
+      consumes:
+      - application/json
+      description: Get list of all participants for a specific match
+      parameters:
+      - description: Match ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Get match participants
+      tags:
+      - matches
+  /api/v1/upload/avatar:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 'Upload a profile image for the authenticated user (max 5MB, supports:
+        jpg, jpeg, png, gif, webp)'
+      parameters:
+      - description: Image file (max 5MB)
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Upload user avatar
+      tags:
+      - upload
+  /api/v1/users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a user's profile information by their ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Get user by ID
+      tags:
+      - users
+  /api/v1/users/{id}/stats:
+    get:
+      consumes:
+      - application/json
+      description: Get statistics for a specific user (matches played, wins, etc.)
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Get user statistics
+      tags:
+      - users
+  /api/v1/users/me:
+    get:
+      consumes:
+      - application/json
+      description: Get the authenticated user's profile information
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.UserResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Get current user profile
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Update the authenticated user's profile information (full_name,
+        skill_level, profile_image_url, preferred_locations)
+      parameters:
+      - description: Profile update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/kicknroar_backend_internal_dto_request.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Update current user profile
+      tags:
+      - users
+  /api/v1/venues:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of all venues with pagination
+      parameters:
+      - description: 'Number of results per page (default: 20)'
+        in: query
+        name: limit
+        type: integer
+      - description: 'Number of results to skip (default: 0)'
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: List venues
+      tags:
+      - venues
+    post:
+      consumes:
+      - application/json
+      description: Create a new football venue with location, facilities, and other
+        details
+      parameters:
+      - description: Venue creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/kicknroar_backend_internal_dto_request.CreateVenueRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Create a new venue
+      tags:
+      - venues
+  /api/v1/venues/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get detailed information about a specific venue
+      parameters:
+      - description: Venue ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Get venue by ID
+      tags:
+      - venues
+    put:
+      consumes:
+      - application/json
+      description: Update venue details (only owner can update)
+      parameters:
+      - description: Venue ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Venue update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/kicknroar_backend_internal_dto_request.UpdateVenueRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Update venue
+      tags:
+      - venues
+  /api/v1/venues/{id}/upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload an image for a venue (only owner can upload)
+      parameters:
+      - description: Venue ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Image file (max 5MB)
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Upload venue image
+      tags:
+      - venues
+  /api/v1/venues/nearby:
+    get:
+      consumes:
+      - application/json
+      description: Find venues within a specified radius from given coordinates
+      parameters:
+      - description: Latitude
+        format: float64
+        in: query
+        name: lat
+        required: true
+        type: number
+      - description: Longitude
+        format: float64
+        in: query
+        name: lng
+        required: true
+        type: number
+      - description: 'Search radius in kilometers (default: 5)'
+        format: float64
+        in: query
+        name: radius
+        type: number
+      - description: Filter by field type (futsal, football, astro)
+        in: query
+        name: field_type
+        type: string
+      - description: 'Maximum number of results (default: 20)'
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/kicknroar_backend_internal_dto_response.ErrorResponse'
+      security:
+      - Bearer: []
+      summary: Find nearby venues
+      tags:
+      - venues
+  /docs:
+    get:
+      description: Interactive API documentation using Scalar
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: HTML content
+          schema:
+            type: string
+      summary: API Documentation
+      tags:
+      - docs
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
